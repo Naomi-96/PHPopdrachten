@@ -1,0 +1,84 @@
+1.
+Een functie is een stuk code waar die een gegeven returnt wanneer je er input in stopt. Een class heeft methoden en variabelen, en soms functies die een geheel vormen. Het is als een blauwdruk voor een object.
+
+2.
+Object-Oriented Programming is vaak makkelijker en sneller te gebruiken. Hierbij maak je objecten waar zowel data als functies in zitten.
+
+3.
+De eigenschappen van bijvoorbeeld mijn gordijnen zouden iets zeggen over de gordijnen. Dat zouden de kleur en de lengte kunnen zijn. De methode zou dan zijn:
+function get_kleur() {
+		return $this->kleur;
+	}
+	
+function get_lengte() {
+		return $this->lengte;
+	}
+
+---------------------------------------------------------------------
+
+class Gordijnen {
+	public $kleur;
+	public $lengte;
+
+	function __construct($kleur, $lengte) {
+		$this->kleur = $kleur;
+		$this->lengte = $lengte;
+	}
+
+	function get_kleur() {
+		return $this->kleur;
+	}
+
+	function get_lengte() {
+		return $this->lengte;
+	}
+
+}
+
+$curtains = new Gordijnen("Bordeaux-roze", "150 cm");
+
+echo $curtains->get_kleur() . "<br>";
+echo $curtains->get_lengte();
+
+
+4.
+Properties: username, hostname, password, databasename
+
+<?php
+
+define("DB_HOST", "localhost");
+define("DB_USER", "root");
+define("DB_PASS", "");
+
+define("DB_NAME", "php");
+
+class DB{
+	protected $dbh;
+	protected $stmt;
+    protected $resultSet;
+
+	public function __construct(){
+		$this->dbh = new PDO("mysql:host=".DB_HOST.";dbname=".DB_NAME, DB_USER, DB_PASS);
+        $this->resultSet = [];
+	}
+
+	public function executeSQL($query){
+        $this->stmt = $this->dbh->prepare($query);
+		$result = $this->stmt->execute();
+
+		if (!$result) {
+    		die('<pre>Oops, Error execute query '. $query .'</pre><br><pre>'.'Result code: '. $result .'</pre>');
+   		}	
+		
+		$row = $this->stmt->fetchAll();
+		
+		if(!empty($row)){
+			$this->resultSet = $row;
+			return $this->resultSet;
+		}
+
+		return $this->resultSet;
+	}
+}
+
+?>
